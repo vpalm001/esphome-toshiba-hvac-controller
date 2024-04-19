@@ -488,6 +488,7 @@ class ToshibaController final : public climate::Climate, public Component {
     }
 
     void handle_register_room_temperature(uint8_t value) {
+        if (value == 127) return;
         ESP_LOGI(TAG, "[REGISTER] received room temperature: %d", value);
         this->internal_idu_room_temperature_ = value;
         sensor_fcu_air_temp_.publish_state(value);
@@ -499,6 +500,7 @@ class ToshibaController final : public climate::Climate, public Component {
     }
 
     void handle_register_outdoor_temperature(int8_t value) {
+        if (value == 127) return;
         ESP_LOGI(TAG, "[REGISTER] received outdoor temperature: %d", value);
         this->sensor_outdoor_temperature_.publish_state(value);
     }
